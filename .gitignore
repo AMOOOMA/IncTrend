@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea/
+
+# ignore pretrained model
+fine_tune_bert/
