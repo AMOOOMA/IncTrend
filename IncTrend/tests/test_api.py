@@ -13,7 +13,7 @@ def test_api():
 
 @pytest.mark.django_db
 def test_post_then_get_messages():
-    test_message = {'type': 'Test', 'body': 'this is a test message'}
+    test_message = {'id': 1, 'type': 'Test', 'body': 'this is a test message'}
     client.post('/Messages/', test_message, format='json')
     resp = client.get('/Messages/', format='json')
     assert resp.status_code == status.HTTP_200_OK
