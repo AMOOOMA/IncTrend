@@ -1,6 +1,7 @@
 import requests
 import json
 import torch
+import numpy as np
 
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader, SequentialSampler
@@ -33,7 +34,6 @@ class Predict:
 
     def get_predictions(self):
         self._get_messages()
-        print(len(self.messages))
 
         input_ids = []
         attention_masks = []
@@ -54,7 +54,6 @@ class Predict:
             input_ids.append(encoded['input_ids'])
             attention_masks.append(encoded['attention_mask'])
             new_labels.append(1)
-            print(i)
 
         input_ids = torch.cat(input_ids, dim=0)
         attention_masks = torch.cat(attention_masks, dim=0)
@@ -83,7 +82,9 @@ class Predict:
             logits = logits.detach().cpu().numpy()
             predictions.append(logits)
 
+        predictions = np.argmax(predictions[0], axis=1).flatten()
         res = []
+
         for i in range(len(self.messages)):
             res.append(('Bullish' if predictions[i] == 1 else 'Bearish', self.messages[i]))
 
@@ -94,7 +95,7 @@ class Predict:
 def main():
     predictions = Predict('AAPL').get_predictions()
     for prediction, message in predictions:
-        print(prediction + " " + message)
+        print(prediction)
 
 
 if __name__ == "__main__":
