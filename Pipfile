@@ -10,6 +10,10 @@ pytest-pythonpath = "*"
 [packages]
 django = "*"
 djangorestframework = "*"
+transformers = "*"
+numpy = "==1.19.3"
+torch = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
