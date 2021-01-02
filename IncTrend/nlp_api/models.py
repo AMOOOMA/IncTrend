@@ -23,7 +23,7 @@ class Entry(models.Model):
     fetched_date = models.DateField()
     message = models.CharField(max_length=200)
     prediction = models.CharField(max_length=10)
-    parent_company = models.ForeignKey()
+    parent_company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.fetched_date + " " + self.prediction + ":" + self.message
