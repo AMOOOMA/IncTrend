@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 
 from .serializers import MessageSerializer, CompanySerializer
 from .models import Message, Company
+from .predict import Predict
 
 
 class MessageViewSet(viewsets.ModelViewSet):
@@ -21,6 +22,6 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
 
 @api_view(['GET', 'POST'])
-def handle_company_query(request):
+def handle_company_query(request, company):
     # TO DO
-    return JsonResponse({'hello': 'world'})
+    return JsonResponse({'hello': company})
