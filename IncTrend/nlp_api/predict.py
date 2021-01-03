@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 import torch
 import numpy as np
 
@@ -12,7 +13,14 @@ path = '../../fine_tune_bert/'
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 batch_size = 32
 epochs = 4
-seed_val = 42
+
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+    print('There are %d GPU(s) available.' % torch.cuda.device_count())
+    print('We will use the GPU:', torch.cuda.get_device_name(0))
+else:
+    print('No GPU available, using the CPU instead.')
+    device = torch.device("cpu")
 
 
 class Predict:
@@ -68,13 +76,21 @@ class Predict:
             batch_size=batch_size
         )
 
-        model = BertForSequenceClassification.from_pretrained(path)
+        model = BertForSequenceClassification.from_pretrained(path) if os.path.exists(path) else \
+            BertForSequenceClassification.from_pretrained(
+                "bert-base-uncased",
+                num_labels=2,
+                output_attentions=False,
+                output_hidden_states=False,
+            )
+
+        model.to(device)
         model.eval()
 
         predictions = []
 
         for batch in test_data:
-            batch = tuple(t for t in batch)
+            batch = tuple(t.to(device) for t in batch)
             b_input_ids, b_input_mask, b_labels = batch
 
             with torch.no_grad():
