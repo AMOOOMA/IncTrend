@@ -14,6 +14,11 @@ class Message(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=10)
 
+    @classmethod
+    def create(cls, name):
+        company = cls(name=name)
+        return company
+
     def __str__(self):
         return self.name
 

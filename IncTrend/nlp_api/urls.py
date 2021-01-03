@@ -11,5 +11,5 @@ router.register(r'Company', views.CompanyViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path(r'^predictions/(?P<company>[a-zA-Z]*)$', views.handle_company_query),
+    re_path(r'^predictions/(?P<name>[a-zA-Z]*)$', views.handle_company_query),
 ]
