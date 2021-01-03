@@ -2,6 +2,7 @@ import pytest
 import json
 
 from django.test import TestCase, Client
+from django.urls import reverse
 from rest_framework import status
 
 
@@ -24,7 +25,7 @@ def test_get_predictions_create_company():
     client = Client()
     test_names = ['AAPL', 'AMZN', 'AAPL', 'AMZN', 'GOOGL']
     for name in test_names:
-        resp = client.get(f'/predictions/{name}')
+        resp = client.get(reverse('company-predictions', args=(name,)))
         assert resp.status_code == status.HTTP_200_OK
 
     resp = client.get('/Company', format='json')
