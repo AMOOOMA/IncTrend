@@ -40,6 +40,8 @@ def handle_company_query(request, name):
         print(entries)
         # to do: check date
     else:
-        predictions = Predict(name).get_predictions()
+        # predictions = Predict(name).get_predictions()
+        print('no entries')
+        # to do
 
     return JsonResponse({'hello': name})
