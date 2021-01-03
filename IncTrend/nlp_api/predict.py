@@ -22,7 +22,7 @@ class Predict:
 
     def _get_messages(self):
         api_url = f"https://api.stocktwits.com/api/2/streams/symbol/{self.company}.json"
-        response = requests.get(api_url, verify=False)
+        response = requests.get(api_url)
         if response.status_code == 200:
             print(f'Successfully GET message from stocktwits for {self.company}')
             dict_data = json.loads(response.content)
@@ -34,6 +34,8 @@ class Predict:
 
     def get_predictions(self):
         self._get_messages()
+        if len(self.messages) == 0:
+            return None
 
         input_ids = []
         attention_masks = []

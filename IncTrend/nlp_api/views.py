@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -37,5 +36,10 @@ def handle_company_query(request, name):
 
     # attempt to find cached Entries
     entries = Entry.objects.filter(parent_company=company)
+    if len(entries) > 0:  # check for cached entries
+        print(entries)
+        # to do: check date
+    else:
+        predictions = Predict(name).get_predictions()
 
     return JsonResponse({'hello': name})
