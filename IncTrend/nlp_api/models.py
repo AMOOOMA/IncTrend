@@ -26,7 +26,7 @@ class Company(models.Model):
 
 # model for storing message and its prediction
 class Entry(models.Model):
-    fetched_date = models.DateField()
+    fetched_date = models.DateTimeField()
     message = models.CharField(max_length=200)
     prediction = models.CharField(max_length=10)
     parent_company = models.ForeignKey(Company, on_delete=models.CASCADE)
