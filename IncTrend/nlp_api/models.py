@@ -38,4 +38,4 @@ class Entry(models.Model):
         return entry
 
     def __str__(self):
-        return self.fetched_date + " " + self.prediction + ":" + self.message
+        return self.fetched_date.strftime("%m/%d/%Y, %H:%M:%S") + " " + self.prediction + ":" + self.message

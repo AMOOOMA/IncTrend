@@ -35,13 +35,19 @@ def handle_company_query(request, name):
         company.save()
 
     # attempt to find cached Entries
-    entries = Entry.objects.filter(parent_company=company)
+    entries = list(Entry.objects.filter(parent_company=company))
     if len(entries) > 0:  # check for cached entries
         print(entries)
         # to do: check date
     else:
+        print('no cached entries')
         predictions = Predict(name).get_predictions()
-        print('no entries')
-        # to do
+        if predictions is not None:
+            for prediction, message in predictions:
+                entry = Entry.create(message, prediction, company)
+                entry.save()
+                entries.append(entry)
+
+    print(entries)
 
     return JsonResponse({'hello': name})
