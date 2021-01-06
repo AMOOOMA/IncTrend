@@ -113,7 +113,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # no need to have timezone support in this api
 
 
 # Static files (CSS, JavaScript, Images)
