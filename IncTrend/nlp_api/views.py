@@ -1,7 +1,4 @@
-from django.shortcuts import render
-
 from django.http.response import JsonResponse
-from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 
@@ -37,8 +34,8 @@ def handle_company_query(request, name):
 
     # attempt to find cached Entries
     entries = list(Entry.objects.filter(parent_company=company))
-    if len(entries) <= 0 or (entries[0].fetched_date - datetime.now()).days > 0:  # check for cached entries, don't use if older than one day
-        print('no cached entries or expired entries')
+    if len(entries) <= 0 or (entries[0].fetched_date - datetime.now()).days > 0:  # don't use if fetched older than one day
+        print('no cached entries or entries expired')
         for entry in entries:  # delete the expired entries if any
             entry.delete()
 
