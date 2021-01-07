@@ -46,7 +46,6 @@ def handle_company_query(request, name):
                 entry.save()
                 entries.append(entry)
 
-    print(entries)
     entries_serializer = EntrySerializer(entries, many=True)
 
     return JsonResponse(entries_serializer.data, safe=False)
